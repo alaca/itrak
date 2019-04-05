@@ -96,15 +96,6 @@ class Register extends Component {
         } = this.props
 
 
-        if ( this.props.registered ) {
-
-            let that = this
-
-            setTimeout( function(){
-                that.goToScreen( 'Login' )
-            }, 2600 )
-        }
-
         return (
             <ImageBackground source={ require('./assets/register.png') } style={{width: '100%', height: '100%'}}>
 
@@ -175,14 +166,9 @@ class Register extends Component {
 
                     <View style={{ height: 40 }}></View>
 
-                    { ! registered && (
-                        
-                        <Button onPress={ () => this.goToScreen( 'Login' ) }>
-                            Login
-                        </Button>
-
-                    ) }
-
+                    <Button onPress={ () => this.goToScreen( 'Login' ) }>
+                        Login
+                    </Button>
 
                 </View>
 

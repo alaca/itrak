@@ -25,15 +25,11 @@ class Login extends Component {
         header: null
     }
 
-
     componentDidMount() {
-
         if ( this.props.user ) {
             goToScreen('Home')
         }
-
     }
-
 
     renderLoginButton = () => {
 
@@ -54,7 +50,6 @@ class Login extends Component {
                 </Button>           
             )
         }
-
 
     }
 
@@ -82,7 +77,6 @@ class Login extends Component {
     }
 
     goToScreen = screen => {
-
         this.props.clearProps()
         this.props.navigation.navigate( screen )
     }

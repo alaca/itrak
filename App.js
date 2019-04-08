@@ -3,9 +3,9 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import firebase from 'firebase'
 import ReduxThunk from 'redux-thunk'
-import reducers from './reducers'
-import firebaseConfig from './config/firebase'
-import Navigation from './Navigation';
+import reducers from './src/reducers'
+import firebaseConfig from './src/config/firebase'
+import Navigation from './src/Navigation';
 
 class App extends Component {
 

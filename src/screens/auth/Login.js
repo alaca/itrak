@@ -16,7 +16,7 @@ import {
     clearError, 
     clearProps 
 } from '../../actions'
-import { Button } from '../common' 
+import { Button } from '../../components' 
 import styles from './styles' 
 
 class Login extends Component {

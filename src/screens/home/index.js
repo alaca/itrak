@@ -6,8 +6,9 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { usersFetched } from '../../actions'
-
 import tmbd from '../../apis/tmdb'
+import style from './styles'
+import styles from '../auth/styles';
 
 class Home extends Component {
 
@@ -38,29 +39,30 @@ class Home extends Component {
 
 
     loadUsers() {
-
+    
         if ( this.props.users ) {
 
             const usersList = this.props.users.map( user => {
+
                 return (
                     <View key={ user.id }>
-                        <Text>{ user.name }</Text>                    
+                        <Text style={ styles.usersList }>{ user.name }</Text>                    
                     </View>
                 )
             })
         
-            return <View>{ usersList }</View>
+            return usersList
         }
 
-
         return <ActivityIndicator size="large" />
+        
 
     }
 
     render() {
 
         return (
-            <View style={{ flex: 1 }}>
+            <View style={ styles.containerStyle }>
                 { this.loadUsers() }
             </View>
         )

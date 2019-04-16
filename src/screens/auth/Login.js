@@ -13,7 +13,7 @@ import {
     emailChanged, 
     passwordChanged, 
     authUser, 
-    clearError, 
+    clearProp, 
     clearProps 
 } from '../../actions'
 import { Button } from '../../components' 
@@ -23,12 +23,6 @@ class Login extends Component {
 
     static navigationOptions = {
         header: null
-    }
-
-    componentDidMount() {
-        if ( this.props.user ) {
-            goToScreen('Home')
-        }
     }
 
     renderLoginButton = () => {
@@ -42,10 +36,7 @@ class Login extends Component {
         } else {
 
             return (          
-                <Button onPress={ () => {
-                    Keyboard.dismiss() 
-                    this.attemptLogin()
-                }}>
+                <Button onPress={ () => this.attemptLogin() }>
                     Log In
                 </Button>           
             )
@@ -54,6 +45,8 @@ class Login extends Component {
     }
 
     attemptLogin = () => {
+
+        Keyboard.dismiss() 
 
         this.props.authUser({ 
             email: this.props.email, 
@@ -86,14 +79,13 @@ class Login extends Component {
 
         const {
             email, 
-            password, 
-            loading, 
+            password,  
             loginError,
             emailError,
             passwordError,
             emailChanged,
             passwordChanged,
-            clearError
+            clearProp
         } = this.props
 
         return (
@@ -113,7 +105,7 @@ class Login extends Component {
                             autoCorrect={ false }
                             placeholder="email"
                             onChangeText={ emailChanged } 
-                            onFocus={ () => clearError( 'emailError' ) } 
+                            onFocus={ () => clearProp( 'emailError' ) } 
                             style={ styles.inputStyle }
                             value={ email }
                         />
@@ -130,7 +122,7 @@ class Login extends Component {
                             autoCorrect={ false }
                             placeholder="password"
                             onChangeText={ passwordChanged } 
-                            onFocus={ () => clearError( 'passwordError' ) } 
+                            onFocus={ () => clearProp( 'passwordError' ) } 
                             style={ styles.inputStyle }
                             value={ password }
                         />
@@ -173,7 +165,7 @@ const mapStateToProps = state => {
         loading,
         emailError,
         passwordError,
-        clearError,
+        clearProp,
         clearProps
     } = state.auth
 
@@ -185,7 +177,7 @@ const mapStateToProps = state => {
         loading,
         emailError,
         passwordError,
-        clearError,
+        clearProp,
         clearProps
     }
 }
@@ -194,6 +186,6 @@ export default connect( mapStateToProps, {
     emailChanged, 
     passwordChanged, 
     authUser, 
-    clearError,
+    clearProp,
     clearProps
 } )( Login )

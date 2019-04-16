@@ -1,3 +1,5 @@
+import { AsyncStorage } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 import firebase from 'firebase'
 import { 
     EMAIL_CHANGED, 
@@ -11,7 +13,8 @@ import {
     REGISTER_USER,
     REGISTER_USER_FAIL,
     REGISTER_USER_SUCCESS,
-    CLEAR_PROPS
+    CLEAR_PROPS,
+    ASYNC_STORAGE_KEY
 } from './types'
 
 
@@ -31,7 +34,7 @@ export const passwordChanged = ( text ) => {
     }
 }
 
-export const clearError = ( prop ) => {
+export const clearProp = ( prop ) => {
 
     return {
         type: CLEAR_FIELD_ERROR,
@@ -74,7 +77,7 @@ export const authUser = ({ email, password, navigation }) => {
 }
 
 
-export const registerUser = ({ email, password, navigation }) => {
+export const registerUser = ({ email, password }) => {
 
     return ( dispatch ) => {
 
@@ -90,13 +93,36 @@ export const registerUser = ({ email, password, navigation }) => {
 
         if ( email && password ) {
             firebase.auth().createUserWithEmailAndPassword( email, password )
-                .then( () => registerUserSuccess( dispatch, navigation ) )
+                .then( () => registerUserSuccess( dispatch ) )
                 .catch( error => registerUserFail( dispatch, error ) )
         }
 
-
     }
 
+}
+
+export const checkLogin = async () => {
+
+    return await AsyncStorage.getItem( ASYNC_STORAGE_KEY )
+}
+
+export const logoutUser = ( navigation ) => {
+
+    return ( dispatch ) => {
+
+        dispatch({ type: CLEAR_PROPS })
+
+        AsyncStorage.removeItem( ASYNC_STORAGE_KEY )
+            .then( () => {
+
+                navigation.navigate({
+                    routeName: 'Login'
+                })
+        
+            })
+    
+
+    }
 
 }
 
@@ -108,9 +134,19 @@ const loginUserSuccess = ( dispatch, user, navigation ) => {
         payload: user 
     })
 
-    navigation.navigate( 'Home' )
+    AsyncStorage.setItem( ASYNC_STORAGE_KEY, 'true' )
+        .then( () => {
+
+            navigation.navigate({
+                routeName: 'Home'
+            })
+
+        })
+
+
 
 }
+
 
 const registerUserSuccess = ( dispatch ) => {
 

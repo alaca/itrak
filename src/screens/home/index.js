@@ -1,68 +1,60 @@
 import React, { Component } from 'react'
 import { 
     View, 
-    Text, 
     ActivityIndicator
 } from 'react-native'
 import { connect } from 'react-redux'
-import { usersFetched } from '../../actions'
+import { usersFetched, logoutUser } from '../../actions'
 import tmbd from '../../apis/tmdb'
-import style from './styles'
-import styles from '../auth/styles';
+import { UserListItem } from '../../components'
+import LogoutButton from '../../components/LogoutButton'
+
 
 class Home extends Component {
 
     static navigationOptions = {
         title: 'iTrak',
-        headerTransparent: true,
-        headerTintColor: 'white',
-        headerLeft: null,
+        headerStyle: {
+            backgroundColor: '#000'
+        },
+        headerTintColor: '#fff',
         gesturesEnabled: false,
         headerTitleStyle: {
-            fontSize: 26
-        }
+            fontSize: 24
+        },
+        headerRight: <LogoutButton />,
+
     }
 
-    componentDidMount() {
+
+    constructor( props ) {
+
+        super( props )
 
         tmbd.get( '/person/popular' )
-        .then( ( res ) => {
-            //http://image.tmdb.org/t/p/
-            this.props.usersFetched( res.data.results )
-
-        } )
-        .catch( err => {
-            console.log( err )
-        })
+            .then(  result => this.props.usersFetched( result.data.results ) )
+            .catch( error => console.log( error ) )
 
     }
 
 
-    loadUsers() {
-    
+
+    loadUsers = () => {
+      
         if ( this.props.users ) {
 
-            const usersList = this.props.users.map( user => {
+            return <UserListItem users={ this.props.users } />
 
-                return (
-                    <View key={ user.id }>
-                        <Text style={ styles.usersList }>{ user.name }</Text>                    
-                    </View>
-                )
-            })
-        
-            return usersList
         }
 
         return <ActivityIndicator size="large" />
-        
 
     }
 
     render() {
 
         return (
-            <View style={ styles.containerStyle }>
+            <View style={{ flex: 1 }}>
                 { this.loadUsers() }
             </View>
         )
@@ -79,5 +71,6 @@ const mapStateToProps = state => {
 }
 
 export default connect( mapStateToProps, { 
-    usersFetched
+    usersFetched,
+    logoutUser
 } )( Home )

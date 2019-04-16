@@ -12,7 +12,6 @@ import {
     REGISTER_USER_SUCCESS,
     CLEAR_PROPS
 } from '../actions/types'
-
 const INITIAL_STATE = {
     email: '',
     password: '',

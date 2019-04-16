@@ -13,7 +13,7 @@ import {
     emailChanged, 
     passwordChanged, 
     registerUser, 
-    clearError, 
+    clearProp, 
     clearProps 
 } from '../../actions'
 import { Button } from '../../components' 
@@ -92,7 +92,7 @@ class Register extends Component {
             passwordError,
             emailChanged,
             passwordChanged,
-            clearError
+            clearProp
         } = this.props
 
 
@@ -127,7 +127,7 @@ class Register extends Component {
                                 autoCorrect={ false }
                                 placeholder="email"
                                 onChangeText={ emailChanged } 
-                                onFocus={ () => clearError( 'emailError' ) } 
+                                onFocus={ () => clearProp( 'emailError' ) } 
                                 style={ styles.inputStyle }
                                 value={ email }
                             />
@@ -149,7 +149,7 @@ class Register extends Component {
                                 autoCorrect={ false }
                                 placeholder="password"
                                 onChangeText={ passwordChanged } 
-                                onFocus={ () => clearError( 'passwordError' ) } 
+                                onFocus={ () => clearProp( 'passwordError' ) } 
                                 style={ styles.inputStyle }
                                 value={ password }
                             />
@@ -200,7 +200,7 @@ const mapStateToProps = state => {
         loading,
         emailError,
         passwordError,
-        clearError,
+        clearProp,
         clearProps
     } = state.auth
 
@@ -212,7 +212,7 @@ const mapStateToProps = state => {
         loading,
         emailError,
         passwordError,
-        clearError,
+        clearProp,
         clearProps
     }
 }
@@ -221,6 +221,6 @@ export default connect( mapStateToProps, {
     emailChanged, 
     passwordChanged, 
     registerUser, 
-    clearError,
+    clearProp,
     clearProps
 } )( Register )
